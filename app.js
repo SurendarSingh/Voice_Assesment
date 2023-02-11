@@ -8,16 +8,16 @@ const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
-// const db = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     database: 'voice_assessment'
-// });
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'xyz'
+});
 
-// db.connect((err) => {
-//     if (err) throw err;
-//     console.log('Connected to mysql database');
-// });
+db.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to mysql database');
+});
 
 // Table 1 __ POST /admin
 // Primary Key, Admin Name, Text, UUID
