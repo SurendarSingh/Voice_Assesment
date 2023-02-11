@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const gTTS = require('gtts');
 
 const app = express();
@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'vatask2_db'
+    database: 'voice_assesment'
 });
 
 db.connect((err) => {
