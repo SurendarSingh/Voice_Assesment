@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // text_id, admin_name, text
 
 app.get('/admin', (req, res) => {
+
+
     res.sendFile(__dirname + "/admin.html");
 });
 
@@ -62,7 +64,7 @@ app.get('/user', (req, res) => {
 app.post('/user', (req, res) => {
     let data = { userInput: req.body.userInput };
 
-    var accuracy = stringSimilarity.compareTwoStrings("healed", "sealed");
+    var accuracy = stringSimilarity.compareTwoStrings("healed", "sealed") * 100;
 
     let sql = 'INSERT INTO inputs SET ?';
     let query = connection.query(sql, data, (err, result) => {
@@ -71,6 +73,8 @@ app.post('/user', (req, res) => {
         res.send('Input stored in database');
     });
 });
+
+console.log(Math.round(stringSimilarity.compareTwoStrings("I went to john house to buy bread", "to buy bread I went john house") * 100));
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');
