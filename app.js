@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // const db = mysql.createConnection({
 //     host: 'localhost',
 //     user: 'root',
-//     database: 'voice_assesment'
+//     database: 'voice_assessment'
 // });
 
 // db.connect((err) => {
