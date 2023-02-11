@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const gTTS = require('gtts');
+const stringSimilarity = require("string-similarity");
 const { randomBytes } = require('crypto');
 
 const app = express();
@@ -19,8 +20,8 @@ db.connect((err) => {
     console.log('Connected to mysql database');
 });
 
-// Table 1 __ POST /admin
-// Primary Key, Admin Name, Text, UUID
+// Table: admin_task_1
+// text_id, admin_name, text
 
 app.get('/admin', (req, res) => {
     res.sendFile(__dirname + "/admin.html");
@@ -32,9 +33,9 @@ app.post('/admin', (req, res) => {
         text: req.body.text,
         text_id: randomBytes(10).toString('hex')
     };
-    var gtts = new gTTS(text, 'en');
     
-    gtts.save(`${text_id}.mp3`, function (err, result){
+    var gtts = new gTTS('Hi bro how are you', 'en');
+    gtts.save(`${__dirname}/Task_2_AudioFiles/${text_id}.mp3`, function (err, result){
         if(err) { throw new Error(err); }
         console.log(`${text_id} audio file created`);
     });
@@ -48,15 +49,20 @@ app.post('/admin', (req, res) => {
 
 });
 
-// Table 2 __ POST /input
-// Primary Key, User Name, Text uploaded by the user, uuid, Accurary
+// Table: user_task_1
+// text_id, user_name, user_text, accuracy
 
 app.get('/user', (req, res) => {
+
+    // Radomly select one audio file from Task_2_AudioFiles Folder
+
     res.sendFile(__dirname + "/user.html");
 });
 
 app.post('/user', (req, res) => {
     let data = { userInput: req.body.userInput };
+
+    var accuracy = stringSimilarity.compareTwoStrings("healed", "sealed");
 
     let sql = 'INSERT INTO inputs SET ?';
     let query = connection.query(sql, data, (err, result) => {
@@ -64,13 +70,7 @@ app.post('/user', (req, res) => {
         console.log(result);
         res.send('Input stored in database');
     });
-
-    // FIND  ACCURARY
-
-
 });
-
-
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');
