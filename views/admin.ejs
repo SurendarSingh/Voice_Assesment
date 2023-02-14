@@ -6,9 +6,13 @@
         <title>Voice Assessment</title>
     </head>
     <body class="container">
-        <textarea id="Answer" class="form-control bg-dark text-light mt-5" cols="30" rows="10" placeholder="Admin should upload the text"style="width: 700px;"></textarea>
+
+      <form action="/admin" method="post">
+        <textarea id="text" class="form-control bg-dark text-light mt-5" cols="30" rows="10" placeholder="Admin should upload the text"style="width: 700px;"></textarea>
         <button type="button" class="btn btn-success mt-5 me-3">
-        Submit text
+          Submit text
         </button>
+      </form>
+
     </body>
 </html>
