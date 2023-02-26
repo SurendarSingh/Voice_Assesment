@@ -12,14 +12,14 @@
     <body class="container">
         
         <audio controls>
-        <source src="/<%= audioFile %>" type="audio/mpeg">
+        <source src="Task_2_AudioFiles/<%= audioFile %>" type="audio/mpeg">
         Your browser does not support the audio tag.
         </audio>
 
-        <form action="/user" method="post">
+        <form action="/usertask2" method="post">
             <input type="text" name="userName" id="userName" class="form-control bg-dark text-light mt-5" placeholder="User's name..." style="width: 20%; ">
             <textarea style="width: 70%; border: 70px;" name="userText" id="userText" class="form-control bg-dark text-light mt-5" cols="30" rows="10" placeholder="Type the text that you heard..." ></textarea>
-            <button type="submit" class="btn btn-success mt-5 me-3">
+            <button type="submit" name="text_id" value="<%= audioFile %>" class="btn btn-success mt-5 me-3">
             Submit Answer
             </button>
         </form>
