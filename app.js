@@ -32,9 +32,8 @@ app.get('/admintask1', (req, res) => {
 
 app.post('/admintask1', (req, res) => {
     const text = req.body.text;
-    const text_id = randomBytes(10).toString('hex');
 
-    const sql = `INSERT INTO admin_task_1 (text, text_id) VALUES ("${text}", "${text_id}")`;
+    const sql = `INSERT INTO admin_task_1 (text) VALUES ("${text}")`;
     db.query(sql, function (err, result) {
         if (err) throw err;
     });
@@ -68,10 +67,25 @@ app.post('/admintask2', (req, res) => {
 
 
 app.get('/usertask1', (req, res) => {
-    res.render("user_task1");
+    const sql = `SELECT text FROM admin_task_1 ORDER BY RAND() LIMIT 1`;
+    db.query(sql, function (err, result) {
+        if (err) throw err;
+        res.render("user_task1", {Text: result[0].text});
+    });
 });
 
 app.post('/usertask1', (req, res) => {
+    const user_name = req.body.userName;
+    const user_text = req.body.userText;
+    const text = req.body.text;
+    
+    const accuracy = Math.round(stringSimilarity.compareTwoStrings(text.toLowerCase(), user_text.toLowerCase()) * 100);
+    const sql = `INSERT INTO user_task_1 (user_name, user_text, text, accuracy) VALUES ("${user_name}", "${user_text}", "${text}", "${accuracy}")`;
+    db.query(sql, function (err, result) {
+        if (err) throw err;
+    });
+
+    res.send({user_name, user_text, text, accuracy});
 });
 
 
